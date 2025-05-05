@@ -1,9 +1,9 @@
 'use client'
 import { cn } from '@/lib/utilits'
-import { useSidebar } from '@/store/use-sidebar'
+import { useSidebar } from '@/store/use-slidebar'
 import { useIsClient } from 'usehooks-ts'
 import { ToggleSkeleton } from './toggle'
-import { RecommendedSkeleton } from './recommended'
+import { RecommendedSkeleton } from './recommeneded'
 import { FollowingSkeleton } from './following'
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => {
