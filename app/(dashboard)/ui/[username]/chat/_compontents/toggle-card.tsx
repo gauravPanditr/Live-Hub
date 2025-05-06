@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { useTransition } from "react";
 
 import { Switch } from "@/components/ui/switch";
-import { updateStream } from "@/actions/stream";
+import { updateStream } from "@/action/stream";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type FieldTypes = "isChatEnabled" | "isChatDelayed" | "isChatFollowersOnly";

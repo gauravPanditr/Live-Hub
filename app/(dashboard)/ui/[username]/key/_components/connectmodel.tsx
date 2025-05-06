@@ -5,7 +5,7 @@ import { useState, useTransition, useRef, ElementRef } from "react";
 import { AlertTriangle } from "lucide-react";
 import { IngressInput } from "livekit-server-sdk";
 
-import { createIngress } from "@/actions/ingress";
+import { createIngress } from "@/action/ingress";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

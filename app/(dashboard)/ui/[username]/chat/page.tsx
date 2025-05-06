@@ -1,7 +1,7 @@
 
 import { getSelf } from '@/lib/auth-service'
 import { getStreamByUserId } from '@/lib/stream-service'
-import { ToggleCard } from './_components/toggle-card'
+import { ToggleCard } from './_compontents/toggle-card'
 
 const Chatpage = async () => {
   const self = await getSelf()

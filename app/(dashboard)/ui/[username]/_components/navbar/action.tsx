@@ -1,11 +1,11 @@
 import {  UserButton } from '@clerk/nextjs'
-import { currentUser } from '@clerk/nextjs/server'
+//import { currentUser } from '@clerk/nextjs/server'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import {  LogOut } from 'lucide-react'
 
 const Actions = async () => {
-  const user = await currentUser()
+ // const user = await currentUser()
 
   return (
     <div className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">

@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/nextjs": "^6.18.5",
     "@clerk/themes": "^2.2.40",
+    "@livekit/components-react": "^2.9.3",
     "@prisma/client": "^6.7.0",
     "@radix-ui/react-avatar": "^1.1.7",
     "@radix-ui/react-dialog": "^1.1.13",
@@ -20,6 +21,7 @@
     "@radix-ui/react-tooltip": "^1.2.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "livekit-client": "^2.11.4",
     "livekit-server-sdk": "^2.12.0",
     "lucide-react": "^0.507.0",
     "next": "15.3.1",
