@@ -1,4 +1,6 @@
-import { SignInButton, UserButton, currentUser } from '@clerk/nextjs'
+
+import { currentUser } from '@clerk/nextjs/server'
+import { SignInButton, UserButton} from '@clerk/nextjs'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Clapperboard } from 'lucide-react'
@@ -9,7 +11,7 @@ const Actions = async () => {
     <div className="flex items-center justify-end gap-x-2 ml-4 lg:ml-0">
       {!user && (
         <SignInButton>
-          <Button variant="primary">Login</Button>
+          <Button variant="default">Login</Button>
         </SignInButton>
       )}
       {!!user && (
