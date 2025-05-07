@@ -23,6 +23,7 @@
     "@radix-ui/react-slot": "^1.2.0",
     "@radix-ui/react-switch": "^1.2.4",
     "@radix-ui/react-tooltip": "^1.2.4",
+    "@uploadthing/react": "^7.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
@@ -39,6 +40,7 @@
     "string-to-color": "^2.2.2",
     "svix": "^1.64.1",
     "tailwind-merge": "^3.2.0",
+    "uploadthing": "^7.6.0",
     "usehooks-ts": "^3.1.1",
     "uuid": "^11.1.0",
     "zustand": "^5.0.4"
