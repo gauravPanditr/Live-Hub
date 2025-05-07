@@ -2,7 +2,7 @@
 import { Pencil } from 'lucide-react'
 import { Separator } from '@/components/ui/separator'
 import Image from 'next/image'
-import { InfoModal } from './info-modal'
+import { InfoModal } from './info-model'
 
 interface InfoCardProps {
   name: string
