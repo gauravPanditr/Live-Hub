@@ -1,13 +1,13 @@
 'use client'
 import { useViewerToken } from '@/hooks/use-viewer-token'
-import { Stream, User } from '@prisma/client'
+
 import { LiveKitRoom } from '@livekit/components-react'
 import { Video, VideoSkeleton } from './video'
-import { useChatSidebar } from '@/store/use-chat-sidebar'
-import { cn } from '@/lib/utils'
+import { useChatSidebar } from '@/store/use-chat-sliderbar'
+import { cn } from '@/lib/utilits'
 import { Chat, ChatSkeleton } from './chat'
 import { ChatToggle } from './chat-toggle'
-import { ChatHeaderSkeleton } from './chat-header'
+
 import { Header, HeaderSkeleton } from './header'
 import { InfoCard } from './info-card'
 import { AboutCard } from './about-card'
