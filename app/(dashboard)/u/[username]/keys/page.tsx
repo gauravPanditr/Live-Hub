@@ -7,6 +7,11 @@ import {ConnectModal} from './_components/connectmodel'
 
 const Keyspage = async () => {
   const self = await getSelf()
+
+  if (!self) {
+    throw new Error("User not authenticated or not found");
+  }
+
   const stream = await getStreamByUserId(self.id)
 
   if (!stream) {
