@@ -23,6 +23,7 @@ export const isBlockedByUser = async (id: string) => {
         })
 
         return !!exisitingBlock
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
         return false
     }
