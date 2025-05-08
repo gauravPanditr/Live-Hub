@@ -3,7 +3,7 @@
 import { toast } from "sonner";
 import { useState, useTransition, useRef } from "react";
 import { AlertTriangle } from "lucide-react";
-import { IngressInput } from "livekit-server-sdk"; // Make sure you import the IngressInput enum
+import { IngressInput } from "livekit-server-sdk";
 
 import { createIngress } from "@/action/ingress";
 import { Button } from "@/components/ui/button";
@@ -28,25 +28,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const RTMP = String(IngressInput.RTMP_INPUT);
-const WHIP = String(IngressInput.WHIP_INPUT);
-
-type IngressType = typeof RTMP | typeof WHIP;
-
 export const ConnectModal = () => {
-  const closeRef = useRef<HTMLButtonElement>(null); // Correcting ref type
+  const closeRef = useRef<HTMLButtonElement>(null);
   const [isPending, startTransition] = useTransition();
-  const [ingressType, setIngressType] = useState<IngressType>(RTMP);
+  const [ingressType, setIngressType] = useState<IngressInput>(IngressInput.RTMP_INPUT);
 
   const onSubmit = () => {
     startTransition(() => {
-      toast.loading("Creating ingress...", { id: "ingress" }); // Show loading toast
-      createIngress(parseInt(ingressType))
-        .then(() => {
+      toast.loading("Creating ingress...", { id: "ingress" });
+
+      createIngress(ingressType)
+        .then((response) => {
+          console.log("Ingress response:", response); // Log the response
           toast.success("Ingress created", { id: "ingress" });
           closeRef?.current?.click();
         })
-        .catch(() => {
+        .catch((err) => {
+          console.error("Create ingress error:", err);
           toast.error("Something went wrong", { id: "ingress" });
         });
     });
@@ -55,9 +53,7 @@ export const ConnectModal = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="default">
-          Generate connection
-        </Button>
+        <Button variant="default">Generate connection</Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -65,15 +61,21 @@ export const ConnectModal = () => {
         </DialogHeader>
         <Select
           disabled={isPending}
-          value={ingressType}
-          onValueChange={(value) => setIngressType(value)}
+          value={ingressType.toString()}
+          onValueChange={(value) =>
+            setIngressType(
+              value === IngressInput.RTMP_INPUT.toString()
+                ? IngressInput.RTMP_INPUT
+                : IngressInput.WHIP_INPUT
+            )
+          }
         >
           <SelectTrigger className="w-full">
             <SelectValue placeholder="Ingress Type" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value={RTMP}>RTMP</SelectItem>
-            <SelectItem value={WHIP}>WHIP</SelectItem>
+            <SelectItem value={IngressInput.RTMP_INPUT.toString()}>RTMP</SelectItem>
+            <SelectItem value={IngressInput.WHIP_INPUT.toString()}>WHIP</SelectItem>
           </SelectContent>
         </Select>
         <Alert>
@@ -85,15 +87,9 @@ export const ConnectModal = () => {
         </Alert>
         <div className="flex justify-between">
           <DialogClose ref={closeRef} asChild>
-            <Button variant="ghost">
-              Cancel
-            </Button>
+            <Button variant="ghost">Cancel</Button>
           </DialogClose>
-          <Button
-            disabled={isPending}
-            onClick={onSubmit}
-            variant="default"
-          >
+          <Button disabled={isPending} onClick={onSubmit} variant="default">
             Generate
           </Button>
         </div>

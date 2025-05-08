@@ -36,7 +36,6 @@ interface StreamPlayerProps {
   stream: CustomStream;
   isFollowing: boolean;
 }
-
 export const StreamPlayer = ({
   user,
   stream,
@@ -44,9 +43,18 @@ export const StreamPlayer = ({
 }: StreamPlayerProps) => {
   const { token, name, identity } = useViewerToken(user.id)
   const { collapsed } = useChatSidebar((state) => state)
+
+  // 🔍 Debug logs
+  console.log("🔐 useViewerToken output:");
+  console.log("   token:", token);
+  console.log("   name:", name);
+  console.log("   identity:", identity);
+
   if (!token || !name || !identity) {
+    console.warn("🚫 Missing viewer token data. Showing skeleton.");
     return <StreamPlayerSkeleton />
   }
+
   return (
     <>
       {collapsed && (
@@ -56,7 +64,7 @@ export const StreamPlayer = ({
       )}
       <LiveKitRoom
         token={token}
-        serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
+        serverUrl={process.env.LIVEKIT_API_URL}
         className={cn(
           'grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full',
           collapsed && 'lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2',
@@ -79,11 +87,11 @@ export const StreamPlayer = ({
             thumbnailUrl={stream.thumbnailUrl}
           />
           <AboutCard
-          hostName={user.username}
-          hostIdentity={user.id}
-          viewerIdentity={identity}
-          bio={user.bio}
-          followedByCount={user._count.followedBy}
+            hostName={user.username}
+            hostIdentity={user.id}
+            viewerIdentity={identity}
+            bio={user.bio}
+            followedByCount={user._count.followedBy}
           />
         </div>
         <div className={cn('col-span-1', collapsed && 'hidden')}>
@@ -101,6 +109,8 @@ export const StreamPlayer = ({
     </>
   )
 }
+
+
 export const StreamPlayerSkeleton = () => {
   return (
     <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">

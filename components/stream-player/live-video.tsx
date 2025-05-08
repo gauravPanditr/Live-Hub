@@ -4,8 +4,8 @@ import { useTracks } from '@livekit/components-react'
 import { Participant, Track } from 'livekit-client'
 import { useEffect, useRef, useState } from 'react'
 import { FullscreenControl } from './fullscreen-control'
-import { useEventListener } from 'usehooks-ts'
 import { VolumeControl } from './volume-control'
+
 interface LiveVideoProps {
   participant: Participant
 }
@@ -19,7 +19,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
 
   const onVolumeChange = (value: number) => {
     setVolume(+value)
-    if (videoRef?.current) {
+    if (videoRef.current) {
       videoRef.current.muted = value === 0
       videoRef.current.volume = +value * 0.01
     }
@@ -27,10 +27,9 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
 
   const toggleMute = () => {
     const isMuted = volume === 0
-
     setVolume(isMuted ? 50 : 0)
 
-    if (videoRef?.current) {
+    if (videoRef.current) {
       videoRef.current.muted = !isMuted
       videoRef.current.volume = isMuted ? 0.5 : 0
     }
@@ -39,20 +38,29 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
   useEffect(() => {
     onVolumeChange(0)
   }, [])
+
   const toggleFullscreen = () => {
     if (isFullscreen) {
       document.exitFullscreen()
-    } else if (wrapperRef?.current) {
+    } else if (wrapperRef.current) {
       wrapperRef.current.requestFullscreen()
     }
   }
+
   const handleFullscreenChange = () => {
     const isCurrentlyFullscreen = document.fullscreenElement !== null
     setIsFullscreen(isCurrentlyFullscreen)
   }
 
-  useEventListener('fullscreenchange', handleFullscreenChange, wrapperRef)
+  // ✅ Manually listen to fullscreenchange with proper typing
+  useEffect(() => {
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [])
 
+  // Attach tracks to video
   useTracks([Track.Source.Camera, Track.Source.Microphone])
     .filter((track) => track.participant.identity === participant.identity)
     .forEach((track) => {
@@ -60,6 +68,7 @@ export const LiveVideo = ({ participant }: LiveVideoProps) => {
         track.publication.track?.attach(videoRef.current)
       }
     })
+
   return (
     <div ref={wrapperRef} className="relative h-full flex">
       <video ref={videoRef} width="100%" />

@@ -1,4 +1,3 @@
-// app/layout.tsx
 import './globals.css'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
@@ -15,15 +14,20 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
-      <html lang="en" className="dark">
-        <body className={inter.className}>
-          <ThemeProvider attribute="class" forcedTheme="dark">
+    <html lang="en" suppressHydrationWarning>
+      <body className={inter.className}>
+        <ClerkProvider appearance={{ baseTheme: dark }}>
+          <ThemeProvider
+            attribute="class"
+            forcedTheme="dark"
+            enableSystem={false}
+            disableTransitionOnChange
+          >
             <Toaster theme="light" position="bottom-center" />
             {children}
           </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   )
 }
