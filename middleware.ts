@@ -1,8 +1,8 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 // Define protected and webhook routes
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/forum(.*)'])
-const isWebhookRoute = createRouteMatcher(['/api/webhooks(.*)'])
+const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/forum(.*)', '/u/(.*)']);  // Added `/u/[username]` here
+const isWebhookRoute = createRouteMatcher(['/api/webhooks(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
   // ✅ Skip Clerk for webhook routes to preserve raw body for signature verification

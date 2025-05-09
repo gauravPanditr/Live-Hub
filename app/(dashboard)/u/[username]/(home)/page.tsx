@@ -1,17 +1,20 @@
+// app/(dashboard)/u/[username]/page.tsx
 import { currentUser } from "@clerk/nextjs/server";
 import getUserByUsername from "@/lib/user-service";
 import { StreamPlayer } from "@/components/stream-player/index";
+import { notFound } from "next/navigation";
 
-interface CreatorPageProps {
+interface Props {
   params: { username: string };
 }
 
-const CreatorPage = async ({ params }: CreatorPageProps) => {
+export default async function CreatorPage({ params }: Props) {
+  const { username } = params;
   const externalUser = await currentUser();
-  const user = await getUserByUsername(params.username);
+  const user = await getUserByUsername(username);
 
   if (!user || user.externalUserId !== externalUser?.id || !user.stream) {
-    throw new Error("Unauthorized");
+    notFound();
   }
 
   return (
@@ -19,6 +22,4 @@ const CreatorPage = async ({ params }: CreatorPageProps) => {
       <StreamPlayer user={user} stream={user.stream} isFollowing />
     </div>
   );
-};
-
-export default CreatorPage;
+}
