@@ -1,29 +1,29 @@
+import {format } from "date-fns";
+import { getBlockedUsers } from "@/lib/block-service";
+import { DataTable } from "./_components/data-table";
+import { columns } from "./_components/coloumn";
 
-import UrlCard from './_components/url-card'
-import { getSelf } from '@/lib/auth-service'
-import { getStreamByUserId } from '@/lib/stream-service'
-import { KeyCard } from './_components/key-card'
-import {ConnectModal} from './_components/'
+const CommunityPage = async () => {
+  const blockedUsers = await getBlockedUsers();
 
-const Keyspage = async () => {
-  const self = await getSelf()
-  const stream = await getStreamByUserId(self.id)
+  const formattedData = blockedUsers.map((block) => ({
+    ...block,
+    userId: block.blocked.id,
+    imageUrl: block.blocked.imageUrl,
+    username: block.blocked.username,
+    createdAt: format(new Date(block.blocked.createdAt), "dd/MM/yyyy"),
+  }));
 
-  if (!stream) {
-    throw new Error('Stream not found')
-  }
-  return (
+  return ( 
     <div className="p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl font-bold">Keys & URLs</h1>
-       <ConnectModal/>
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold">
+          Community Settings
+        </h1>
       </div>
-      <div className="space-y-4">
-        <UrlCard value={stream.serverUrl} />
-        <KeyCard value={stream.streamKey} />
-      </div>
+      <DataTable columns={columns} data={formattedData} />
     </div>
-  )
+   );
 }
-
-export default Keyspage
+ 
+export default CommunityPage;
