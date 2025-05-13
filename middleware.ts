@@ -1,24 +1,19 @@
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+// middleware.ts
+import { clerkMiddleware } from "@clerk/nextjs/server";
 
-// Define protected and webhook routes
-const isProtectedRoute = createRouteMatcher(['/dashboard(.*)', '/forum(.*)', '/u/(.*)']);  // Added `/u/[username]` here
-const isWebhookRoute = createRouteMatcher(['/api/webhooks(.*)']);
-
-export default clerkMiddleware(async (auth, req) => {
-  // ✅ Skip Clerk for webhook routes to preserve raw body for signature verification
-  if (isWebhookRoute(req)) return;
-
-  // ✅ Require auth only for protected routes
-  if (isProtectedRoute(req)) {
-    await auth.protect();
-  }
-});
+// Just export Clerk’s middleware with no extra callback.
+// This will make sure every page request—even public ones—has the Clerk context.
+export default clerkMiddleware();
 
 export const config = {
+  // match all Next.js routes except the build internals and static assets:
   matcher: [
-    // Skip Next.js internals and all static assets
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always match API and tRPC routes
-    '/(api|trpc)(.*)',
+    /*
+     * Matches everything except:
+     *  - _next internals
+     *  - static files (css, js, images…)
+     *  - favicon.ico
+     */
+    "/((?!_next/static|_next/image|favicon.ico).*)",
   ],
 };
