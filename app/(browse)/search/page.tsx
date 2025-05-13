@@ -9,7 +9,7 @@ interface SearchPageProps {
   };
 };
 
-const SearchPage = ({
+const SearchPage =async ({
   searchParams,
 }: SearchPageProps) => {
   if (!searchParams.term) {
