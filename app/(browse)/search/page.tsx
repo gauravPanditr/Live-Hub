@@ -1,22 +1,19 @@
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
-
 import { Results, ResultsSkeleton } from "./_components/result";
 
-interface SearchPageProps {
-  searchParams: {
+interface PageProps {
+  searchParams?: {
     term?: string;
   };
-};
+}
 
-const SearchPage =async ({
-  searchParams,
-}: SearchPageProps) => {
-  if (!searchParams.term) {
+const SearchPage = ({ searchParams }: PageProps) => {
+  if (!searchParams?.term) {
     redirect("/");
   }
 
-  return ( 
+  return (
     <div className="h-full p-8 max-w-screen-2xl mx-auto">
       <Suspense fallback={<ResultsSkeleton />}>
         <Results term={searchParams.term} />
@@ -24,5 +21,5 @@ const SearchPage =async ({
     </div>
   );
 };
- 
+
 export default SearchPage;
