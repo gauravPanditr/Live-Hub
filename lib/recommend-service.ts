@@ -7,11 +7,11 @@ const getRecommended = async () => {
   try {
     const self = await getSelf()
     userId = self.id
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    console.error("getRecommended failed:", error)
     userId = null
   }
+
   let users = []
   if (userId) {
     users = await db.user.findMany({
