@@ -1,20 +1,24 @@
+
+
 import { Suspense } from "react";
 import { redirect } from "next/navigation";
 
 import { Results, ResultsSkeleton } from "./_components/result";
 
 interface SearchPageProps {
-  searchParams: Promise<{ term?: string }>;  // ← Note Promise<…>
+  
+  searchParams: Promise<{ term?: string }>;
 }
-
 
 export default async function SearchPage({
   searchParams,
 }: SearchPageProps) {
-  const { term } = await searchParams;       // ← Await it here
+  // await the Promise to get your term
+  const { term } = await searchParams;                       
 
   if (!term) {
-    redirect("/");
+    // redirects must happen before any JSX is returned
+    redirect("/");                                          
   }
 
   return (
