@@ -145,7 +145,7 @@ export const InfoModal = ({
             </DialogClose>
             <Button
               disabled={isPending}
-              variant="primary"
+              variant="default"
               type="submit"
             >
               Save

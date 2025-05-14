@@ -1,4 +1,4 @@
-import { error } from "console";
+
 import { getSelf } from "./auth-service";
 import { db } from "./db";
 
@@ -29,6 +29,7 @@ export const getFollowedUsers = async () => {
       }
     })
     return followedUsers
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return []
   }
@@ -53,6 +54,7 @@ export const isFollowingUser = async (id: string) => {
     })
     return !!existingFollow
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     return false
   }

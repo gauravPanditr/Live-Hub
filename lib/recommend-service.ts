@@ -8,6 +8,7 @@ const getRecommended = async () => {
     const self = await getSelf()
     userId = self.id
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     userId = null
   }

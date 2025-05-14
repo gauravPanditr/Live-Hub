@@ -65,6 +65,7 @@ export const UserAvatar = ({
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 interface UserAvatarSkeletonProps 
 extends VariantProps<typeof avatarSizes> {};
 
