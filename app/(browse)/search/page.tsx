@@ -4,25 +4,24 @@ import { redirect } from "next/navigation";
 import { Results, ResultsSkeleton } from "./_components/result";
 
 interface SearchPageProps {
-  searchParams: {
-    term?: string;
-  };
-};
+  searchParams: Promise<{ term?: string }>;  // ← Note Promise<…>
+}
 
-const SearchPage = ({
+
+export default async function SearchPage({
   searchParams,
-}: SearchPageProps) => {
-  if (!searchParams.term) {
+}: SearchPageProps) {
+  const { term } = await searchParams;       // ← Await it here
+
+  if (!term) {
     redirect("/");
   }
 
-  return ( 
+  return (
     <div className="h-full p-8 max-w-screen-2xl mx-auto">
       <Suspense fallback={<ResultsSkeleton />}>
-        <Results term={searchParams.term} />
+        <Results term={term} />
       </Suspense>
     </div>
   );
-};
- 
-export default SearchPage;
+}
